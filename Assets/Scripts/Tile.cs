@@ -47,14 +47,17 @@ public class Tile : MonoBehaviour {
 	public void setPiece(GameObject p, string color)
 	{
 		King kingScript = p.GetComponent<King> ();
-		if (kingScript != null) 
-		{
+		if (kingScript != null) {
+			Debug.Log ("it worked");
 			piece = p;
 			Instantiate (p);
 			if (color == "black")
 				kingScript.setBlack ();
 			else
 				kingScript.setWhite ();
+			p.transform.position = new Vector3 ((float)pos [0], .1f, (float)pos [1]);
+		} else {
+			Debug.Log ("unlucky");
 		}
 
 	}

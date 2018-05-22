@@ -91,5 +91,6 @@ public class Board : MonoBehaviour {
 	private void Update()
 	{
 		UpdateMouseOver();
+
 	}
 }

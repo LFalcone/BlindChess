@@ -250,9 +250,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tile: {fileID: 1604920459080402, guid: 83d152db915a18647b1f89cfa1eefffb, type: 2}
-  King: {fileID: 100000, guid: 311128620dbb26b41806e5f7a01eaea8, type: 3}
+  King: {fileID: 1074242587989216, guid: 64096ad6a5963854782a2dfdff8f17a2, type: 2}
   x: 4
   y: 6
+  selectedSpace: 
 --- !u!4 &1151683989
 Transform:
   m_ObjectHideFlags: 0
@@ -407,7 +408,8 @@ Prefab:
         type: 2}
       propertyPath: King
       value: 
-      objectReference: {fileID: 100000, guid: 311128620dbb26b41806e5f7a01eaea8, type: 3}
+      objectReference: {fileID: 1074242587989216, guid: 64096ad6a5963854782a2dfdff8f17a2,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7e2fa37e5bb622f4384ec0c9dfdcb553, type: 2}
   m_IsPrefabParent: 0
