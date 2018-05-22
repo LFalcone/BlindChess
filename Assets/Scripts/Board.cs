@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Board : MonoBehaviour {
 
+	public string turn;
+
 	public GameObject[,] tiles;
 	public GameObject Tile;
 	public GameObject King;
@@ -12,12 +14,16 @@ public class Board : MonoBehaviour {
 	public int y=6;
 	public int[] selectedSpace;
 
+	public string selectedPiece;
+
 	private Vector2 mouseOver;
 	private Vector2 startDrag;
 	private Vector2 endDrag;
 
 	void Start()
 	{
+		turn = "white";
+		selectedPiece = "none";
 		selectedSpace = new int[] {-1,-1};
 		tiles = new GameObject[x, y];
 		MakeBoard();
@@ -33,9 +39,11 @@ public class Board : MonoBehaviour {
 				myTile.transform.parent = this.transform;
 				myTile.transform.position = new Vector3 (i, 0, j);
 				Tile tileScript = myTile.GetComponent<Tile> ();
-				if ((i + j) % 2 == 0) 
-				{
+				if ((i + j) % 2 == 0) {
 					tileScript.setBlack ();
+				} else 
+				{
+					tileScript.setWhite ();
 				}
 				tileScript.setPos (i, j);
 				tiles [i,j] = myTile;
@@ -45,9 +53,13 @@ public class Board : MonoBehaviour {
 
 	void SetPieces()
 	{
-		GameObject myTile = tiles [0,2];
+		GameObject myTile = tiles [2,0];
 		Tile tileScript = myTile.GetComponent<Tile> ();
-		tileScript.setPiece (King, "white");
+		tileScript.setPiece ("whiteKing", "white");
+		myTile = tiles [1,5];
+		tileScript = myTile.GetComponent<Tile> ();
+		tileScript.setPiece ("blackKing", "black");
+
 	}
 
 	void UpdateMouseOver()
@@ -69,28 +81,71 @@ public class Board : MonoBehaviour {
 			mouseOver.x = -1;
 			mouseOver.y = -1;
 		}
-		if (Input.GetMouseButton (0))
+		if (Input.GetMouseButtonDown (0))
 		{
-			if (selectedSpace [0] != -1 && selectedSpace [1] != -1) 
-			{
+			//this will be moved later
+			if (selectedSpace [0] != -1 && selectedSpace [1] != -1) {
 				GameObject oldTile = tiles [selectedSpace [0], selectedSpace [1]];
 				Tile oldScript = oldTile.GetComponent<Tile> ();
 				oldScript.selectSpace (false);
 			}
-			selectedSpace [0] = (int)mouseOver.x;
+			//end of part to be moved later
+
+			if (selectedPiece == "none") 
+			{		
+				selectedSpace [0] = (int)mouseOver.x;
+				selectedSpace [1] = (int)mouseOver.y;
+				if (selectedSpace [0] != -1 && selectedSpace [1] != -1) 
+				{
+					GameObject myTile = tiles [selectedSpace [0], selectedSpace [1]];
+					Tile tileScript = myTile.GetComponent<Tile> ();
+					tileScript.selectSpace (true);
+					if (tileScript.piece == "whiteKing") 
+					{
+						
+					}
+				}
+			}
+				
+	//old stuff that i am reworking but would like to keep for now to reference
+	/*		selectedSpace [0] = (int)mouseOver.x;
 			selectedSpace [1] = (int)mouseOver.y;
 
-			GameObject newTile = tiles [selectedSpace[0],selectedSpace[1]];
-			Tile tileScript = newTile.GetComponent<Tile> ();
-			tileScript.selectSpace (true);
-			Debug.Log ("x=" + mouseOver.x);
-			Debug.Log ("y=" + mouseOver.y);
+			if (selectedSpace [0] != -1 && selectedSpace [1] != -1) 
+			{
+				GameObject newTile = tiles [selectedSpace [0], selectedSpace [1]];
+				Tile tileScript = newTile.GetComponent<Tile> ();
+				tileScript.selectSpace (true);
+
+				if (oldString == "whiteKing") {
+					tileScript.setPiece (King, "white");
+				} 
+				else if (oldString == "blackKing") 
+				{
+					tileScript.setPiece (King, "black");
+				}
+
+				Debug.Log (tileScript.piece);
+				Debug.Log ("x=" + mouseOver.x);
+				Debug.Log ("y=" + mouseOver.y);
+			}*/
 		}
 	}
 
-	private void Update()
+	void clearSelections()
 	{
-		UpdateMouseOver();
+		for (int i = 0; i < x; ++i) {
+			for (int j = 0; j < y; ++j) {
+				GameObject myTile = tiles [i, j];
+				Tile tileScript = myTile.GetComponent<Tile> ();
+			}
+		}
 
 	}
+
+	void Update()
+	{
+		UpdateMouseOver();
+	}
+
 }
