@@ -139,7 +139,7 @@ public class Board : MonoBehaviour {
 					GameObject myTile = tiles [selectedSpace [0], selectedSpace [1]];
 					Tile tileScript = myTile.GetComponent<Tile> ();
 					tileScript.selectSpace (true);
-					selectedPiece == tileScript.piece;
+					selectedPiece = tileScript.piece;
 					//Kings
 					if (tileScript.piece == "whiteKing") {
 						//check if adjacent spaces are on the board
