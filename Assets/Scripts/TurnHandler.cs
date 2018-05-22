@@ -18,6 +18,7 @@ public class TurnHandler : MonoBehaviour {
 		gameOver = false;
 		turnPlayer = startingPlayer;
 		waitForNextPlayer = true;
+		SetCameraPosition ();
 	}
 	
 	// Update is called once per frame
@@ -35,6 +36,7 @@ public class TurnHandler : MonoBehaviour {
 		waitForNextPlayer = true;
 		if(turnPlayer == Player.WHITE) turnPlayer = Player.BLACK;
 		else if(turnPlayer == Player.BLACK) turnPlayer = Player.WHITE;
+		SetCameraPosition ();
 	}
 
 	// RevealTurnPlayer reveals the turn player's side of the board after the other player is already looking away
@@ -45,5 +47,34 @@ public class TurnHandler : MonoBehaviour {
 	// RevealBoard reveals the entire board, which will likely only have use when the game is complete
 	void RevealBoard () {
 		gameOver = true;
+	}
+
+	// WHITE Camera:
+	// 				Position: 1.5, 5, -1.5
+	//				Rotation: 0.4472136, 0, 0, 0.8944272
+	// BLACK Camera:
+	//				Position: 1.5, 5, 6.5
+	//				Rotation: 0, 0.8944263, -0.4472136, 0.001235376
+	private Vector3 whitePosition = new Vector3(1.5f, 5, -1.5f);
+	private Quaternion whiteRotation = new Quaternion(0.4472136f, 0, 0, 0.8944272f);
+	private Vector3 blackPosition = new Vector3(1.5f, 5, 6.5f);
+	private Quaternion blackRotation = new Quaternion(0, 0.8944263f, -0.4472136f, 0.001235376f);
+
+	void SetCameraPosition () {
+		if (turnPlayer == Player.WHITE) {
+			transform.localPosition = whitePosition;
+			transform.localRotation = whiteRotation;
+		} else if (turnPlayer == Player.BLACK) {
+			transform.localPosition = blackPosition;
+			transform.localRotation = blackRotation;
+		}
+	}
+
+	Player GetTurnPlayer () {
+		return turnPlayer;
+	}
+
+	bool isWaiting () {
+		return waitForNextPlayer;
 	}
 }

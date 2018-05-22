@@ -176,7 +176,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &939943005
 GameObject:
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 939943005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9f8970acaee7e64689d099b0684fd1c, type: 3}
+  m_Script: {fileID: 11500000, guid: e8435efb3ca0fbe499f1dc493f878bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   c1: {fileID: 0}
@@ -218,7 +218,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1151683987
 GameObject:
@@ -249,11 +249,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b018d04ed7031d54dabb832f9caa1f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turn: 
   Tile: {fileID: 1604920459080402, guid: 83d152db915a18647b1f89cfa1eefffb, type: 2}
   King: {fileID: 1074242587989216, guid: 64096ad6a5963854782a2dfdff8f17a2, type: 2}
   x: 4
   y: 6
   selectedSpace: 
+  selectedPiece: 
 --- !u!4 &1151683989
 Transform:
   m_ObjectHideFlags: 0
@@ -264,7 +266,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1579513228}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -343,12 +346,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1579513224}
-  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
   m_LocalPosition: {x: 1.5, y: 5, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 1151683989}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!114 &1579513229
 MonoBehaviour:
@@ -358,9 +361,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1579513224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0c728dc66680f44b9434aa26cc90e12, type: 3}
+  m_Script: {fileID: 11500000, guid: 114cd18d6975c584394366811aa7d53d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whiteTurn: 1
+  startingPlayer: 0
 --- !u!1001 &2107547902
 Prefab:
   m_ObjectHideFlags: 0
