@@ -1,9 +1,9 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Board : MonoBehaviour {
+public class BoardCopy : MonoBehaviour {
+	//A copy of board so that we can work simultaneously
 
 	public GameObject[,] tiles;
 	public GameObject Tile;
@@ -50,56 +50,13 @@ public class Board : MonoBehaviour {
 
 	void SetPieces()
 	{
-		// Spawn Kings
 		GameObject myTile = tiles [2,0];
 		Tile tileScript = myTile.GetComponent<Tile> ();
 		tileScript.setPiece ("whiteKing", "white");
-		myTile = tiles [2,5];
+		myTile = tiles [1,5];
 		tileScript = myTile.GetComponent<Tile> ();
 		tileScript.setPiece ("blackKing", "black");
 
-		// Spawn Queens
-		myTile = tiles [1,0];
-		tileScript = myTile.GetComponent<Tile> ();
-		tileScript.setPiece ("whiteQueen", "white");
-		myTile = tiles [1,5];
-		tileScript = myTile.GetComponent<Tile> ();
-		tileScript.setPiece ("blackQueen", "black");
-
-		// Spawn Pawns
-		for (int j = 0; j < 4; ++j) {
-			myTile = tiles [j,1];
-			tileScript = myTile.GetComponent<Tile> ();
-			tileScript.setPiece ("whitePawn", "white");
-			myTile = tiles [j,4];
-			tileScript = myTile.GetComponent<Tile> ();
-			tileScript.setPiece ("blackPawn", "black");
-		}
-
-		// Get and Spawn Chosen Pieces
-		List<int> choices = GetComponent<LoadOnClick> ().GetChoices ();
-		for (int j = 0; j < 4; ++j) {
-			string side = "";
-			int y;
-			if (j < 2) {
-				side += "white";
-				y = 0;
-			} else {
-				side += "black";
-				y = 5;
-			}
-			string piece = side;
-			if (choices [j] == 0)
-				piece += "Bishop";
-			else if (choices [j] == 1)
-				piece += "Knight";
-			else if (choices [j] == 2)
-				piece += "Rook";
-			Debug.Log (piece + "!");
-			myTile = tiles [j%2*3,y];
-			tileScript = myTile.GetComponent<Tile> ();
-			tileScript.setPiece (piece, side);
-		}
 	}
 
 	void UpdateMouseOver()
@@ -206,12 +163,12 @@ public class Board : MonoBehaviour {
 									checkScript.setKill ();
 								}
 							}
+						}
 					}
 				}
-			}
-				
-	//old stuff that i am reworking but would like to keep for now to reference
-	/*		selectedSpace [0] = (int)mouseOver.x;
+
+				//old stuff that i am reworking but would like to keep for now to reference
+				/*		selectedSpace [0] = (int)mouseOver.x;
 			selectedSpace [1] = (int)mouseOver.y;
 
 			if (selectedSpace [0] != -1 && selectedSpace [1] != -1) 
@@ -232,8 +189,8 @@ public class Board : MonoBehaviour {
 				Debug.Log ("x=" + mouseOver.x);
 				Debug.Log ("y=" + mouseOver.y);
 			}*/
+			}
 		}
-	}
 	}
 
 	void clearSelections()
@@ -251,5 +208,4 @@ public class Board : MonoBehaviour {
 	{
 		UpdateMouseOver();
 	}
-
 }
