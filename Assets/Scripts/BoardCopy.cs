@@ -50,13 +50,56 @@ public class BoardCopy : MonoBehaviour {
 
 	void SetPieces()
 	{
+		// Spawn Kings
 		GameObject myTile = tiles [2,0];
 		Tile tileScript = myTile.GetComponent<Tile> ();
 		tileScript.setPiece ("whiteKing", "white");
-		myTile = tiles [1,5];
+		myTile = tiles [2,5];
 		tileScript = myTile.GetComponent<Tile> ();
 		tileScript.setPiece ("blackKing", "black");
 
+		// Spawn Queens
+		myTile = tiles [1,0];
+		tileScript = myTile.GetComponent<Tile> ();
+		tileScript.setPiece ("whiteQueen", "white");
+		myTile = tiles [1,5];
+		tileScript = myTile.GetComponent<Tile> ();
+		tileScript.setPiece ("blackQueen", "black");
+
+		// Spawn Pawns
+		for (int j = 0; j < 4; ++j) {
+			myTile = tiles [j,1];
+			tileScript = myTile.GetComponent<Tile> ();
+			tileScript.setPiece ("whitePawn", "white");
+			myTile = tiles [j,4];
+			tileScript = myTile.GetComponent<Tile> ();
+			tileScript.setPiece ("blackPawn", "black");
+		}
+
+		// Get and Spawn Chosen Pieces
+		List<int> choices = GetComponent<LoadOnClick> ().GetChoices ();
+		for (int j = 0; j < 4; ++j) {
+			string side = "";
+			int y;
+			if (j < 2) {
+				side += "white";
+				y = 0;
+			} else {
+				side += "black";
+				y = 5;
+			}
+			string piece = side;
+			if (choices [j] == 0)
+				piece += "Bishop";
+			else if (choices [j] == 1)
+				piece += "Knight";
+			else if (choices [j] == 2)
+				piece += "Rook";
+			Debug.Log (piece + "!");
+			myTile = tiles [j%2*3,y];
+			tileScript = myTile.GetComponent<Tile> ();
+			tileScript.setPiece (piece, side);
+		}
 	}
 
 	void UpdateMouseOver()
@@ -92,79 +135,208 @@ public class BoardCopy : MonoBehaviour {
 			{		
 				selectedSpace [0] = (int)mouseOver.x;
 				selectedSpace [1] = (int)mouseOver.y;
-				if (selectedSpace [0] != -1 && selectedSpace [1] != -1) 
-				{
+				if (selectedSpace [0] != -1 && selectedSpace [1] != -1) {
 					GameObject myTile = tiles [selectedSpace [0], selectedSpace [1]];
 					Tile tileScript = myTile.GetComponent<Tile> ();
 					tileScript.selectSpace (true);
-					if (tileScript.piece == "whiteKing") 
-					{
+					selectedPiece = tileScript.piece;
+					//Kings
+					if (tileScript.piece == "whiteKing") {
 						//check if adjacent spaces are on the board
 						bool left = false;
 						bool right = false;
 						bool down = false;
 						bool up = false;
-						if (selectedSpace [0] > 0) //not on the left wall
-						{
+						if (selectedSpace [0] > 0) { //not on the left wall
 							left = true; //cam move left
-							Debug.Log("left");
+							Debug.Log ("left");
 						}
-						if (selectedSpace [0] < 5) //not on the right wall
-						{
+						if (selectedSpace [0] < 5) { //not on the right wall
 							right = true; //cam move left
-							Debug.Log("right");
+							Debug.Log ("right");
 						}
-						if (selectedSpace [1] > 0) //not on the upper wall
-						{
+						if (selectedSpace [1] > 0) { //not on the upper wall
 							down = true; //cam move up
-							Debug.Log("down");
+							Debug.Log ("down");
 						}
-						if (selectedSpace [1] < 5) //not on the lower wall
-						{
+						if (selectedSpace [1] < 5) { //not on the lower wall
 							up = true; //cam move down
-							Debug.Log("up");
+							Debug.Log ("up");
 						}
 
-						if(left)
-						{
+						if (left) {
 							GameObject checkTile = tiles [selectedSpace [0] - 1, selectedSpace [1]];
 							Tile checkScript = checkTile.GetComponent<Tile> ();
-							if (checkScript.state == 0)
-							{
+							if (checkScript.state == 0) {
 								checkScript.setMove ();
-							}
-							else if (checkScript.state == 1)
-							{
+							} else if (checkScript.state == 2) {
 								checkScript.setKill ();
 							}
-							if (up)
-							{
+							if (up) {
 								checkTile = tiles [selectedSpace [0] - 1, selectedSpace [1] + 1];
 								checkScript = checkTile.GetComponent<Tile> ();
-								if (checkScript.state == 0)
-								{
+								if (checkScript.state == 0) {
 									checkScript.setMove ();
-								}
-								else if (checkScript.state == 1)
-								{
+								} else if (checkScript.state == 2) {
 									checkScript.setKill ();
 								}
 							}
-							if (down)
-							{
+							if (down) {
 								checkTile = tiles [selectedSpace [0] - 1, selectedSpace [1] - 1];
 								checkScript = checkTile.GetComponent<Tile> ();
-								if (checkScript.state == 0)
-								{
+								if (checkScript.state == 0) {
 									checkScript.setMove ();
-								}
-								else if (checkScript.state == 1)
-								{
+								} else if (checkScript.state == 2) {
 									checkScript.setKill ();
 								}
+							}
+						}
+						if (right) {
+							GameObject checkTile = tiles [selectedSpace [0] + 1, selectedSpace [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 2) {
+								checkScript.setKill ();
+							}
+							if (up) {
+								checkTile = tiles [selectedSpace [0] + 1, selectedSpace [1] + 1];
+								checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 2) {
+									checkScript.setKill ();
+								}
+							}
+							if (down) {
+								checkTile = tiles [selectedSpace [0] + 1, selectedSpace [1] - 1];
+								checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 2) {
+									checkScript.setKill ();
+								}
+							}
+						}
+						if (up) {
+							GameObject checkTile = tiles [selectedSpace [0], selectedSpace [1] + 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 2) {
+								checkScript.setKill ();
+							}
+						}
+						if (down) {
+							GameObject checkTile = tiles [selectedSpace [0], selectedSpace [1] - 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 2) {
+								checkScript.setKill ();
 							}
 						}
 					}
+					if (tileScript.piece == "blackKing") {
+						//check if adjacent spaces are on the board
+						bool left = false;
+						bool right = false;
+						bool down = false;
+						bool up = false;
+						if (selectedSpace [0] > 0) { //not on the left wall
+							left = true; //cam move left
+							Debug.Log ("left");
+						}
+						if (selectedSpace [0] < 5) { //not on the right wall
+							right = true; //cam move left
+							Debug.Log ("right");
+						}
+						if (selectedSpace [1] > 0) { //not on the upper wall
+							down = true; //cam move up
+							Debug.Log ("down");
+						}
+						if (selectedSpace [1] < 5) { //not on the lower wall
+							up = true; //cam move down
+							Debug.Log ("up");
+						}
+
+						if (left) {
+							GameObject checkTile = tiles [selectedSpace [0] - 1, selectedSpace [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								checkScript.setKill ();
+							}
+							if (up) {
+								checkTile = tiles [selectedSpace [0] - 1, selectedSpace [1] + 1];
+								checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 1) {
+									checkScript.setKill ();
+								}
+							}
+							if (down) {
+								checkTile = tiles [selectedSpace [0] - 1, selectedSpace [1] - 1];
+								checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 1) {
+									checkScript.setKill ();
+								}
+							}
+						}
+						if (right) {
+							GameObject checkTile = tiles [selectedSpace [0] + 1, selectedSpace [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								checkScript.setKill ();
+							}
+							if (up) {
+								checkTile = tiles [selectedSpace [0] + 1, selectedSpace [1] + 1];
+								checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 1) {
+									checkScript.setKill ();
+								}
+							}
+							if (down) {
+								checkTile = tiles [selectedSpace [0] + 1, selectedSpace [1] - 1];
+								checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 1) {
+									checkScript.setKill ();
+								}
+							}
+						}
+						if (up) {
+							GameObject checkTile = tiles [selectedSpace [0], selectedSpace [1] + 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								checkScript.setKill ();
+							}
+						}
+						if (down) {
+							GameObject checkTile = tiles [selectedSpace [0], selectedSpace [1] - 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								checkScript.setKill ();
+							}
+						}
+					}
+				} 
+				else 
+				{
+					selectedPiece = "none";
 				}
 
 				//old stuff that i am reworking but would like to keep for now to reference
@@ -208,4 +380,5 @@ public class BoardCopy : MonoBehaviour {
 	{
 		UpdateMouseOver();
 	}
+
 }
