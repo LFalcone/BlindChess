@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Board : MonoBehaviour {
 
-	public string turn;
-
 	public GameObject[,] tiles;
 	public GameObject Tile;
 	public GameObject King;
@@ -22,7 +20,6 @@ public class Board : MonoBehaviour {
 
 	void Start()
 	{
-		turn = "white";
 		selectedPiece = "none";
 		selectedSpace = new int[] {-1,-1};
 		tiles = new GameObject[x, y];
