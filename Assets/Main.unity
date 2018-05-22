@@ -287,11 +287,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4f033ae9e9e934c4e9c6e87c666993c4, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &644316847 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1459304123389332, guid: 4f033ae9e9e934c4e9c6e87c666993c4,
-    type: 2}
-  m_PrefabInternal: {fileID: 644316846}
 --- !u!1 &644316848 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1176149188802986, guid: 4f033ae9e9e934c4e9c6e87c666993c4,
@@ -345,11 +340,6 @@ GameObject:
 --- !u!1 &644316858 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1817799377987012, guid: 4f033ae9e9e934c4e9c6e87c666993c4,
-    type: 2}
-  m_PrefabInternal: {fileID: 644316846}
---- !u!1 &644316859 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1355179866371928, guid: 4f033ae9e9e934c4e9c6e87c666993c4,
     type: 2}
   m_PrefabInternal: {fileID: 644316846}
 --- !u!1 &644316860 stripped
@@ -703,65 +693,46 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 400000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+    - target: {fileID: 4172717262198254, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
       propertyPath: m_LocalPosition.x
       value: -0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+    - target: {fileID: 4172717262198254, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+    - target: {fileID: 4172717262198254, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
       propertyPath: m_LocalPosition.z
       value: 2.5
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+    - target: {fileID: 4172717262198254, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+    - target: {fileID: 4172717262198254, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+    - target: {fileID: 4172717262198254, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+    - target: {fileID: 4172717262198254, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+    - target: {fileID: 4172717262198254, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: d4297599dd905834480be543eaa58e30, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b680c050eaae7a54087d24d5fe89f499, type: 2}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+  m_ParentPrefab: {fileID: 100100000, guid: aa822de3c1fa53a4d9b37ef5fe5cb079, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1321681854 stripped
 GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: d4297599dd905834480be543eaa58e30, type: 3}
+  m_PrefabParentObject: {fileID: 1665254983274850, guid: aa822de3c1fa53a4d9b37ef5fe5cb079,
+    type: 2}
   m_PrefabInternal: {fileID: 1321681853}
---- !u!114 &1321681855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1321681854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bfba5b6971f6714a96dcd5f9824bc45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: w
-  Board: {fileID: 644316847}
-  visible: 0
-  Tile: {fileID: 644316859}
-  space: 
 --- !u!1 &1579513224
 GameObject:
   m_ObjectHideFlags: 0
