@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour {
 	public List<int> pos;	//(x,y) bottom left tile = (0,0)
 	public GameObject piece;	//will be empty if state=0
 	public Material mat;
+	public string color;
 
 	void Awake()
 	{
@@ -16,11 +17,27 @@ public class Tile : MonoBehaviour {
 
 	public void setBlack()
 	{
+		color = "black";
 		mat.color = Color.black;
 	}
 	public void setWhite()
 	{
+		color = "white";
 		mat.color = Color.white;
+	}
+	public void selectSpace(bool selected)
+	{
+		if (selected) {
+			mat.color = Color.red;
+		} 
+		else if (color == "black") 
+		{
+			mat.color = Color.black;
+		}
+		else
+		{
+			mat.color = Color.white;
+		}
 	}
 	public void setPos(int x, int y)
 	{
