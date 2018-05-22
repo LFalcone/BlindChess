@@ -70,11 +70,11 @@ public class TurnHandler : MonoBehaviour {
 		}
 	}
 
-	Player GetTurnPlayer () {
+	public Player GetTurnPlayer () {
 		return turnPlayer;
 	}
 
-	bool isWaiting () {
+	public bool isWaiting () {
 		return waitForNextPlayer;
 	}
 }

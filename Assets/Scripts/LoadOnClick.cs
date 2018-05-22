@@ -19,4 +19,8 @@ public class LoadOnClick : MonoBehaviour
         }
         Application.LoadLevel(level);
     }
+
+	public List<int> GetChoices() {
+		return Choices;
+	}
 }
