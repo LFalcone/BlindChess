@@ -5,8 +5,9 @@ using UnityEngine;
 public class Turn : MonoBehaviour {
 	
 	public enum Player { WHITE, BLACK }
+	public bool whiteTurn = true;
 
-	public bool startingPlayer = Player.WHITE;
+	public bool startingPlayer = true;
 
 	private bool turnPlayer;
 	private bool waitForNextPlayer;
