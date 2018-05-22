@@ -109,6 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  pos: 
+  pos: 0000000000000000
   piece: {fileID: 0}
   mat: {fileID: 0}

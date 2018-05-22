@@ -22,4 +22,23 @@ public class Tile : MonoBehaviour {
 	{
 		mat.color = Color.white;
 	}
+	public void setPos(int x, int y)
+	{
+		pos [0] = x;
+		pos [1] = y;
+	}
+	public void setPiece(GameObject p, string color)
+	{
+		King kingScript = p.GetComponent<King> ();
+		if (kingScript != null) 
+		{
+			piece = p;
+			Instantiate (p);
+			if (color == "black")
+				kingScript.setBlack ();
+			else
+				kingScript.setWhite ();
+		}
+
+	}
 }
