@@ -18,8 +18,6 @@ public class Board : MonoBehaviour {
 	private Vector2 startDrag;
 	private Vector2 endDrag;
 
-	private Vector3 offset = new Vector3 (45.0f, 35.0f, 0);
-
 	void Start()
 	{
 		selectedPiece = "empty";
@@ -113,7 +111,7 @@ public class Board : MonoBehaviour {
 			return;
 		}
 		RaycastHit hit;
-		if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition + offset), out hit, 25.0f))
+		if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 25.0f))
 		{
 			mouseOver.x = (int)(hit.point.x);
 			mouseOver.y = (int)(hit.point.z);
