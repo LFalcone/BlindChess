@@ -10,6 +10,8 @@ public class Tile : MonoBehaviour {
 	public Material mat;
 	public string color;
 
+	public bool softSelect= false;
+
 	void Awake()
 	{
 		mat = GetComponent<Renderer>().material;
@@ -28,6 +30,7 @@ public class Tile : MonoBehaviour {
 	}
 	public void selectSpace(bool selected)
 	{
+		softSelect = false;
 		if (selected) {
 			mat.color = Color.red;
 		} 
@@ -43,10 +46,12 @@ public class Tile : MonoBehaviour {
 	public void setMove()
 	{
 		mat.color = Color.yellow;
+		softSelect = true;
 	}
 	public void setKill()
 	{
 		mat.color = Color.green;
+		softSelect = true;
 	}
 	public void setPos(int x, int y)
 	{
