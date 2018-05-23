@@ -332,6 +332,108 @@ public class Board : MonoBehaviour {
 								checkScript.setKill ();
 							}
 						}
+
+						// Rooks
+						if (tileScript.piece == "whiteRook") {
+							int[] current = selectedSpace;
+							while (current [0] > 0) {
+								--current[0];
+								GameObject checkTile = tiles [current [0], current [1]];
+								Tile checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 2) {
+									checkScript.setKill ();
+									break;
+								}
+							}
+							current = selectedSpace;
+							while (current [0] < 3) {
+								++current[0];
+								GameObject checkTile = tiles [current [0], current [1]];
+								Tile checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 2) {
+									checkScript.setKill ();
+									break;
+								}
+							}
+							current = selectedSpace;
+							while (current [1] > 0) {
+								--current[1];
+								GameObject checkTile = tiles [current [0], current [1]];
+								Tile checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 2) {
+									checkScript.setKill ();
+									break;
+								}
+							}
+							current = selectedSpace;
+							while (current [0] < 5) {
+								++current[1];
+								GameObject checkTile = tiles [current [0], current [1]];
+								Tile checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 2) {
+									checkScript.setKill ();
+									break;
+								}
+							}
+						}
+						if (tileScript.piece == "blackRook") {
+							int[] current = selectedSpace;
+							while (current [0] > 0) {
+								--current[0];
+								GameObject checkTile = tiles [current [0], current [1]];
+								Tile checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 1) {
+									checkScript.setKill ();
+									break;
+								}
+							}
+							current = selectedSpace;
+							while (current [0] < 3) {
+								++current[0];
+								GameObject checkTile = tiles [current [0], current [1]];
+								Tile checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 1) {
+									checkScript.setKill ();
+									break;
+								}
+							}
+							current = selectedSpace;
+							while (current [1] > 0) {
+								--current[1];
+								GameObject checkTile = tiles [current [0], current [1]];
+								Tile checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 1) {
+									checkScript.setKill ();
+									break;
+								}
+							}
+							current = selectedSpace;
+							while (current [0] < 5) {
+								++current[1];
+								GameObject checkTile = tiles [current [0], current [1]];
+								Tile checkScript = checkTile.GetComponent<Tile> ();
+								if (checkScript.state == 0) {
+									checkScript.setMove ();
+								} else if (checkScript.state == 1) {
+									checkScript.setKill ();
+									break;
+								}
+							}
+						}
 					}
 				} 
 				else 
