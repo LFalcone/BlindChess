@@ -8,3 +8,5 @@ Blind Chess.sln
 Blind Chess.userprefs
 Assembly-CSharp.csproj
 Library/ShaderCache/
+Temp/
+Library/EditorInstance.json

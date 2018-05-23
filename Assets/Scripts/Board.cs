@@ -337,6 +337,7 @@ public class Board : MonoBehaviour {
 							}
 						}
 					}
+					// END OF KINGS
 
 					//*****//
 					//ROOKS//
@@ -468,7 +469,140 @@ public class Board : MonoBehaviour {
 							}
 						}
 					}
-					//END OF KINGS
+					// END OF ROOKS
+
+					//*******//
+					//BISHOPS//
+					//*******//
+					if (tileScript.piece == "whiteBishop") {
+						int[] current = new int[2];
+						current[0] = selectedSpace[0];
+						current[1] = selectedSpace[1];
+						while (current [0] > 0 && current[1] > 0) {
+							--current [0]; --current [1];
+							GameObject checkTile = tiles [current [0], current [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								break;
+							} else if (checkScript.state == 2) {
+								checkScript.setKill ();
+								break;
+
+							}
+						}
+						current[0] = selectedSpace[0];
+						current[1] = selectedSpace[1];
+						while (current [0] < 3 && current[1] < 5) {
+							++current [0]; ++current [1];
+							GameObject checkTile = tiles [current [0], current [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								break;
+							} else if (checkScript.state == 2) {
+								checkScript.setKill ();
+								break;
+							}
+						}
+						current[0] = selectedSpace[0];
+						current[1] = selectedSpace[1];
+						while (current [0] < 3 && current [1] > 0) {
+							++current [0]; --current [1];
+							GameObject checkTile = tiles [current [0], current [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								break;
+							} else if (checkScript.state == 2) {
+								checkScript.setKill ();
+								break;
+							}
+						}
+						current[0] = selectedSpace[0];
+						current[1] = selectedSpace[1];
+						while (current [0] > 0 && current [1] < 5) {
+							--current [0]; ++current [1];
+							GameObject checkTile = tiles [current [0], current [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								break;
+							} else if (checkScript.state == 2) {
+								checkScript.setKill ();
+								break;
+							}
+						}
+					}
+					if (tileScript.piece == "blackBishop") {
+						int[] current = new int[2];
+						current[0] = selectedSpace[0];
+						current[1] = selectedSpace[1];
+						while (current [0] > 0 && current[1] > 0) {
+							--current [0]; --current [1];
+							GameObject checkTile = tiles [current [0], current [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								checkScript.setKill ();
+								break;
+							} else if (checkScript.state == 2) {
+								break;
+
+							}
+						}
+						current[0] = selectedSpace[0];
+						current[1] = selectedSpace[1];
+						while (current [0] < 3 && current[1] < 5) {
+							++current [0]; ++current [1];
+							GameObject checkTile = tiles [current [0], current [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								checkScript.setKill ();
+								break;
+							} else if (checkScript.state == 2) {
+								break;
+							}
+						}
+						current[0] = selectedSpace[0];
+						current[1] = selectedSpace[1];
+						while (current [0] < 3 && current [1] > 0) {
+							++current [0]; --current [1];
+							GameObject checkTile = tiles [current [0], current [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								checkScript.setKill ();
+								break;
+							} else if (checkScript.state == 2) {
+								break;
+							}
+						}
+						current[0] = selectedSpace[0];
+						current[1] = selectedSpace[1];
+						while (current [0] > 0 && current [1] < 5) {
+							--current [0]; ++current [1];
+							GameObject checkTile = tiles [current [0], current [1]];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 0) {
+								checkScript.setMove ();
+							} else if (checkScript.state == 1) {
+								checkScript.setKill ();
+								break;
+							} else if (checkScript.state == 2) {
+								break;
+							}
+						}
+					}
+					// END OF BISHOPS
 
 					//*****//
 					//PAWNS//
@@ -559,7 +693,7 @@ public class Board : MonoBehaviour {
 						}
 
 					}
-					//END OF PAWNS
+					// END OF PAWNS
 
 				} else {
 					selectedPiece = "empty";
