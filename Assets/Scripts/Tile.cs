@@ -10,10 +10,27 @@ public class Tile : MonoBehaviour {
 	public Material mat;
 	public string color;
 
+	//PIECES
+	public GameObject King;
+	public GameObject Queen;
+	public GameObject Rook;
+	public GameObject Bishop;
+	public GameObject Knight;
+	public GameObject Pawn;
+	//END PIECES
+
+
 	public bool softSelect= false;
 
 	void Awake()
 	{
+		King.SetVisible (false);
+		Queen.SetVisible (false);
+		Rook.SetVisible (false);
+		Bishop.SetVisible (false);
+		Knight.SetVisible (false);
+		Pawn.SetVisible (false);
+
 		mat = GetComponent<Renderer>().material;
 		piece = "empty";
 	}
@@ -75,31 +92,12 @@ public class Tile : MonoBehaviour {
 		{
 			state = 0;
 		}
-	}
-	/*public void setPiece(GameObject p, string color)
-	{
-		King kingScript = p.GetComponent<King> ();
-		if (kingScript != null) {
-			Debug.Log ("it worked");
-
-			Instantiate (p);
-			if (color == "black") {
-				kingScript.setBlack ();
-				piece = "blackKing";
-				state = 2;
-			} 
-			else 
-			{
-				kingScript.setWhite ();
-				piece = "whiteKing";
-				state = 1;
-			}
-			p.transform.position = this.transform.position;
-			p.transform.Translate (0.0f, 0.4f, 0.0f);
-		} else {
-			Debug.Log ("unlucky");
+		if (piece == "whiteKing") 
+		{
+			King.SetVisible (true);
+			King.GetComponent<Renderer>().material;
 		}
-	}*/
+	}
 
 	public void removePiece(int x, int y)
 	{
