@@ -50,15 +50,15 @@ public class TurnHandler : MonoBehaviour {
 	}
 
 	// WHITE Camera:
-	// 				Position: 1.5, 5, -1.5
-	//				Rotation: 0.4472136, 0, 0, 0.8944272
+	// 				Position: 1.5, 5, -1
+	//				Rotation: 0.5, 0, 0, 0.8660254
 	// BLACK Camera:
-	//				Position: 1.5, 5, 6.5
-	//				Rotation: 0, 0.8944263, -0.4472136, 0.001235376
-	private Vector3 whitePosition = new Vector3(1.5f, 5, -1.5f);
-	private Quaternion whiteRotation = new Quaternion(0.4472136f, 0, 0, 0.8944272f);
-	private Vector3 blackPosition = new Vector3(1.5f, 5, 6.5f);
-	private Quaternion blackRotation = new Quaternion(0, 0.8944263f, -0.4472136f, 0.001235376f);
+	//				Position: 1.5, 5, 6
+	//				Rotation: 0, 0.8660254, -0.5, 0
+	private Vector3 whitePosition = new Vector3(1.5f, 5, -1);
+	private Quaternion whiteRotation = new Quaternion(0.5f, 0, 0, 0.8660254f);
+	private Vector3 blackPosition = new Vector3(1.5f, 5, 6);
+	private Quaternion blackRotation = new Quaternion(0, 0.8660254f, -0.5f, 0);
 
 	void SetCameraPosition () {
 		if (turnPlayer == Player.WHITE) {
