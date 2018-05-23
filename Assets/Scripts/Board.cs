@@ -1121,29 +1121,6 @@ public class Board : MonoBehaviour {
 				} else {
 					selectedPiece = "empty";
 				}
-				
-				//old stuff that i am reworking but would like to keep for now to reference
-				/*		selectedSpace [0] = (int)mouseOver.x;
-			selectedSpace [1] = (int)mouseOver.y;
-
-			if (selectedSpace [0] != -1 && selectedSpace [1] != -1) 
-			{
-				GameObject newTile = tiles [selectedSpace [0], selectedSpace [1]];
-				Tile tileScript = newTile.GetComponent<Tile> ();
-				tileScript.selectSpace (true);
-
-				if (oldString == "whiteKing") {
-					tileScript.setPiece (King, "white");
-				} 
-				else if (oldString == "blackKing") 
-				{
-					tileScript.setPiece (King, "black");
-				}
-
-				Debug.Log (tileScript.piece);
-				Debug.Log ("x=" + mouseOver.x);
-				Debug.Log ("y=" + mouseOver.y);
-			}*/
 			}
 
 			/*************************************
