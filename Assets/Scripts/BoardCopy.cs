@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BoardCopy : MonoBehaviour {
 	//A copy of board so that we can work simultaneously
-
-
 	public GameObject[,] tiles;
 	public GameObject Tile;
 	public GameObject King;
@@ -21,7 +19,7 @@ public class BoardCopy : MonoBehaviour {
 
 	void Start()
 	{
-		selectedPiece = "none";
+		selectedPiece = "empty";
 		selectedSpace = new int[] {-1,-1};
 		tiles = new GameObject[x, y];
 		MakeBoard();
@@ -132,8 +130,7 @@ public class BoardCopy : MonoBehaviour {
 			}
 			//end of part to be moved later
 
-			if (selectedPiece == "none") 
-			{
+			if (selectedPiece == "empty") {
 				clearSelections ();
 
 				selectedSpace [0] = (int)mouseOver.x;
@@ -142,7 +139,7 @@ public class BoardCopy : MonoBehaviour {
 					GameObject myTile = tiles [selectedSpace [0], selectedSpace [1]];
 					Tile tileScript = myTile.GetComponent<Tile> ();
 					tileScript.selectSpace (true);
-					//selectedPiece = tileScript.piece;
+					selectedPiece = tileScript.piece;
 
 					//*****//
 					//Kings//
@@ -339,6 +336,7 @@ public class BoardCopy : MonoBehaviour {
 							}
 						}
 					}
+					//END OF KINGS
 
 					//*****//
 					//PAWNS//
@@ -363,7 +361,7 @@ public class BoardCopy : MonoBehaviour {
 						}
 
 						if (up) {
-							GameObject checkTile = tiles [selectedSpace [0], selectedSpace [1]+1];
+							GameObject checkTile = tiles [selectedSpace [0], selectedSpace [1] + 1];
 							Tile checkScript = checkTile.GetComponent<Tile> ();
 							if (checkScript.state == 0) {
 								checkScript.setMove ();
@@ -406,7 +404,7 @@ public class BoardCopy : MonoBehaviour {
 						}
 
 						if (down) {
-							GameObject checkTile = tiles [selectedSpace [0], selectedSpace [1]-1];
+							GameObject checkTile = tiles [selectedSpace [0], selectedSpace [1] - 1];
 							Tile checkScript = checkTile.GetComponent<Tile> ();
 							if (checkScript.state == 0) {
 								checkScript.setMove ();
@@ -429,10 +427,10 @@ public class BoardCopy : MonoBehaviour {
 						}
 
 					}
-				} 
-				else 
-				{
-					selectedPiece = "none";
+					//END OF PAWNS
+
+				} else {
+					selectedPiece = "empty";
 				}
 
 				//old stuff that i am reworking but would like to keep for now to reference
@@ -458,12 +456,36 @@ public class BoardCopy : MonoBehaviour {
 				Debug.Log ("y=" + mouseOver.y);
 			}*/
 			}
+
+			/*************************************
+			 if a piece has already been selected
+			*************************************/
+			else {
+				int[] oldSpace = { selectedSpace [0], selectedSpace [1] };
+				selectedSpace [0] = (int)mouseOver.x;
+				selectedSpace [1] = (int)mouseOver.y;
+				if (selectedSpace [0] != -1 && selectedSpace [1] != -1) {
+					GameObject myTile = tiles [selectedSpace [0], selectedSpace [1]];
+					Tile tileScript = myTile.GetComponent<Tile> ();
+					GameObject oldTile = tiles [oldSpace [0], oldSpace [1]];
+					Tile oldScript = oldTile.GetComponent<Tile> ();
+					if (tileScript.softSelect) {
+						if (oldScript.state == 1) {	
+							tileScript.setPiece (oldScript.piece, "white");
+						} else if (oldScript.state == 2) {
+							tileScript.setPiece (oldScript.piece, "white");
+						}
+						oldScript.setPiece ("empty", "empty");
+					} 
+					clearSelections ();
+				}
+			}
 		}
 	}
 
 	void clearSelections()
 	{
-		selectedPiece = "none";
+		selectedPiece = "empty";
 		for (int i = 0; i < x; ++i) {
 			for (int j = 0; j < y; ++j) {
 				GameObject myTile = tiles [i, j];
@@ -477,6 +499,7 @@ public class BoardCopy : MonoBehaviour {
 	void Update()
 	{
 		UpdateMouseOver();
+
 	}
 
 }
