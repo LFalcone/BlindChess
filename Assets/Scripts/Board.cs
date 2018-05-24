@@ -127,7 +127,7 @@ public class Board : MonoBehaviour {
 			mouseOver.x = -1;
 			mouseOver.y = -1;
 		}
-		if (Input.GetMouseButtonDown (0) && !GetComponentInChildren<TurnHandler>().isWaiting())
+		if (Input.GetMouseButtonDown (0) && !GetComponentInChildren<TurnHandler>().isWaiting() && !GetComponentInChildren<TurnHandler>().hasTakenTurn())
 		{
 			//this will be moved later
 			if (selectedSpace [0] != -1 && selectedSpace [1] != -1) {
@@ -1149,9 +1149,11 @@ public class Board : MonoBehaviour {
 						if (oldScript.state == 1 && turnPlayer == TurnHandler.Player.WHITE) {	
 							tileScript.setPiece (oldScript.piece, "white");
 							oldScript.setPiece ("empty", "empty");
+							GetComponentInChildren<TurnHandler> ().TurnTaken ();
 						} else if (oldScript.state == 2 && turnPlayer == TurnHandler.Player.BLACK) {
 							tileScript.setPiece (oldScript.piece, "black");
 							oldScript.setPiece ("empty", "empty");
+							GetComponentInChildren<TurnHandler> ().TurnTaken ();
 						}
 					} 
 					clearSelections ();
