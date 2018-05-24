@@ -10,6 +10,7 @@ public class TurnHandler : MonoBehaviour {
 	public Player startingPlayer = Player.WHITE;
 
 	private Player turnPlayer;
+	private bool turnTaken;
 	private bool waitForNextPlayer;
 	private bool gameOver;
 
@@ -17,16 +18,17 @@ public class TurnHandler : MonoBehaviour {
 	void Start () {
 		gameOver = false;
 		turnPlayer = startingPlayer;
+		turnTaken = false;
 		waitForNextPlayer = true;
 		SetCameraPosition ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Return) && !waitForNextPlayer) { // Eventually this should be changed from a GetKeyDown to a button press or just after the turn player makes their move
+		if (Input.GetKeyDown (KeyCode.Space) && turnTaken) { // Eventually this should be changed from a GetKeyDown to a button press or just after the turn player makes their move
 			NextTurn ();
 		}
-		if (Input.GetKeyDown (KeyCode.Space) && waitForNextPlayer) { // Eventually this should be changed from a GetKeyDown to a button press. It actually could stay as a Spacebar press as long
+		else if (Input.GetKeyDown (KeyCode.Space) && waitForNextPlayer) { // Eventually this should be changed from a GetKeyDown to a button press. It actually could stay as a Spacebar press as long
 			RevealTurnPlayer ();									 // as there is some way to notify the player that they need to press Spacebar
 		}
 	}
@@ -37,6 +39,7 @@ public class TurnHandler : MonoBehaviour {
 		if(turnPlayer == Player.WHITE) turnPlayer = Player.BLACK;
 		else if(turnPlayer == Player.BLACK) turnPlayer = Player.WHITE;
 		SetCameraPosition ();
+		turnTaken = false;
 	}
 
 	// RevealTurnPlayer reveals the turn player's side of the board after the other player is already looking away
@@ -72,6 +75,14 @@ public class TurnHandler : MonoBehaviour {
 
 	public Player GetTurnPlayer () {
 		return turnPlayer;
+	}
+
+	public void TurnTaken () {
+		turnTaken = true;
+	}
+
+	public bool hasTakenTurn () {
+		return turnTaken;
 	}
 
 	public bool isWaiting () {
