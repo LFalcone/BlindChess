@@ -110,11 +110,17 @@ public class Board : MonoBehaviour {
 			Debug.Log("Unable to find Main Camera");
 			return;
 		}
+		Ray ray;
+		ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
-		if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 25.0f))
+		if (Physics.Raycast(ray, out hit))
 		{
-			mouseOver.x = (int)(hit.point.x);
-			mouseOver.y = (int)(hit.point.z);
+			GameObject clickedObject = hit.collider.gameObject;
+			if (clickedObject.name == "Tile(Clone)") {
+				Tile clicked = clickedObject.GetComponent<Tile> ();
+				mouseOver.x = clicked.pos[0];
+				mouseOver.y = clicked.pos[1];
+			}
 		}
 		else
 		{
@@ -458,7 +464,7 @@ public class Board : MonoBehaviour {
 							current[0] = selectedSpace[0];
 							current[1] = selectedSpace[1];
 							while (current [1] < 5) {
-								--current[1];
+								++current[1];
 								GameObject checkTile = tiles [current [0], current [1]];
 								Tile checkScript = checkTile.GetComponent<Tile> ();
 								if (checkScript.state == 0) {
@@ -784,7 +790,7 @@ public class Board : MonoBehaviour {
 							current[0] = selectedSpace[0];
 							current[1] = selectedSpace[1];
 							while (current [1] < 5) {
-								--current[1];
+								++current[1];
 								GameObject checkTile = tiles [current [0], current [1]];
 								Tile checkScript = checkTile.GetComponent<Tile> ();
 								if (checkScript.state == 0) {
