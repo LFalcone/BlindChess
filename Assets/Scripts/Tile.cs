@@ -10,12 +10,86 @@ public class Tile : MonoBehaviour {
 	public Material mat;
 	public string color;
 
+	public GameObject whiteKing;
+	public GameObject whiteQueen;
+	public GameObject whiteRook;
+	public GameObject whiteBishop;
+	public GameObject whiteKnight;
+	public GameObject whitePawn;
+	public GameObject blackKing;
+	public GameObject blackQueen;
+	public GameObject blackRook;
+	public GameObject blackBishop;
+	public GameObject blackKnight;
+	public GameObject blackPawn;
+
 	public bool softSelect= false;
 
 	void Awake()
 	{
 		mat = GetComponent<Renderer>().material;
 		piece = "empty";
+
+
+		whiteKing = Instantiate (whiteKing);
+		whiteKing.transform.parent = this.transform;
+		whiteKing.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		whiteKing.SetActive (false);
+
+		whiteQueen = Instantiate (whiteQueen);
+		whiteQueen.transform.parent = this.transform;
+		whiteQueen.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		whiteQueen.SetActive (false);
+
+		whiteRook = Instantiate (whiteRook);
+		whiteRook.transform.parent = this.transform;
+		whiteRook.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		whiteRook.SetActive (false);
+
+		whiteBishop = Instantiate (whiteBishop);
+		whiteBishop.transform.parent = this.transform;
+		whiteBishop.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		whiteBishop.SetActive (false);
+
+		whiteKnight = Instantiate (whiteKnight);
+		whiteKnight.transform.parent = this.transform;
+		whiteKnight.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		whiteKnight.SetActive (false);
+
+		whitePawn = Instantiate (whitePawn);
+		whitePawn.transform.parent = this.transform;
+		whitePawn.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		whitePawn.SetActive (false);
+
+		blackKing = Instantiate (blackKing);
+		blackKing.transform.parent = this.transform;
+		blackKing.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		blackKing.SetActive (false);
+
+		blackQueen = Instantiate (blackQueen);
+		blackQueen.transform.parent = this.transform;
+		blackQueen.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		blackQueen.SetActive (false);
+
+		blackRook = Instantiate (blackRook);
+		blackRook.transform.parent = this.transform;
+		blackRook.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		blackRook.SetActive (false);
+
+		blackBishop = Instantiate (blackBishop);
+		blackBishop.transform.parent = this.transform;
+		blackBishop.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		blackBishop.SetActive (false);
+
+		blackKnight = Instantiate (blackKnight);
+		blackKnight.transform.parent = this.transform;
+		blackKnight.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		blackKnight.SetActive (false);
+
+		blackPawn = Instantiate (blackPawn);
+		blackPawn.transform.parent = this.transform;
+		blackPawn.transform.position = new Vector3 (pos[0], 0, pos[1]);
+		blackPawn.SetActive (false);
 	}
 
 	public void setBlack()
