@@ -30,66 +30,55 @@ public class Tile : MonoBehaviour {
 		mat = GetComponent<Renderer>().material;
 		piece = "empty";
 
-
 		whiteKing = Instantiate (whiteKing);
 		whiteKing.transform.parent = this.transform;
-		whiteKing.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		whiteKing.SetActive (false);
+		whiteKing.transform.localPosition = new Vector3 (0f,4f, 0f);
 
 		whiteQueen = Instantiate (whiteQueen);
 		whiteQueen.transform.parent = this.transform;
-		whiteQueen.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		whiteQueen.SetActive (false);
+		whiteQueen.transform.localPosition = new Vector3 (0f,0.5f, 0f);
 
 		whiteRook = Instantiate (whiteRook);
 		whiteRook.transform.parent = this.transform;
-		whiteRook.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		whiteRook.SetActive (false);
+		whiteRook.transform.localPosition = new Vector3 (0f,0.1f, 0f);
 
 		whiteBishop = Instantiate (whiteBishop);
 		whiteBishop.transform.parent = this.transform;
-		whiteBishop.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		whiteBishop.SetActive (false);
+		whiteBishop.transform.localPosition = new Vector3 (0f,0.1f, 0f);
 
 		whiteKnight = Instantiate (whiteKnight);
 		whiteKnight.transform.parent = this.transform;
-		whiteKnight.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		whiteKnight.SetActive (false);
+		whiteKnight.transform.localPosition = new Vector3 (0f,0.1f, 0f);
 
 		whitePawn = Instantiate (whitePawn);
 		whitePawn.transform.parent = this.transform;
-		whitePawn.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		whitePawn.SetActive (false);
+		whitePawn.transform.localPosition = new Vector3 (0f,4f, 0f);
 
 		blackKing = Instantiate (blackKing);
 		blackKing.transform.parent = this.transform;
-		blackKing.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		blackKing.SetActive (false);
+		blackKing.transform.localPosition = new Vector3 (0f,4f, 0f);
 
 		blackQueen = Instantiate (blackQueen);
 		blackQueen.transform.parent = this.transform;
-		blackQueen.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		blackQueen.SetActive (false);
+		blackQueen.transform.localPosition = new Vector3 (0f,0.5f, 0f);
 
 		blackRook = Instantiate (blackRook);
 		blackRook.transform.parent = this.transform;
-		blackRook.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		blackRook.SetActive (false);
+		blackRook.transform.localPosition = new Vector3 (0f,0.1f, 0f);
 
 		blackBishop = Instantiate (blackBishop);
 		blackBishop.transform.parent = this.transform;
-		blackBishop.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		blackBishop.SetActive (false);
+		blackBishop.transform.localPosition = new Vector3 (0f,0.1f, 0f);
 
 		blackKnight = Instantiate (blackKnight);
 		blackKnight.transform.parent = this.transform;
-		blackKnight.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		blackKnight.SetActive (false);
+		blackKnight.transform.localPosition = new Vector3 (0f,0.1f, 0f);
 
 		blackPawn = Instantiate (blackPawn);
 		blackPawn.transform.parent = this.transform;
-		blackPawn.transform.position = new Vector3 (pos[0], 0, pos[1]);
-		blackPawn.SetActive (false);
+		blackPawn.transform.localPosition = new Vector3 (0f,4f, 0);
+
+		deactivate ();
 	}
 
 	public void setBlack()
@@ -134,9 +123,67 @@ public class Tile : MonoBehaviour {
 	}
 	//maybe use later
 
+	public void deactivate()
+	{
+		
+		whiteKing.SetActive (false);
+
+		whiteQueen.SetActive (false);
+
+		whiteRook.SetActive (false);
+
+		whiteBishop.SetActive (false);
+
+		whiteKnight.SetActive (false);
+
+		whitePawn.SetActive (false);
+
+		blackKing.SetActive (false);
+
+		blackQueen.SetActive (false);
+
+		blackRook.SetActive (false);
+
+		blackBishop.SetActive (false);
+
+		blackKnight.SetActive (false);
+
+		blackPawn.SetActive (false);
+	}
+
+	public void deActivate(GameObject g)
+	{
+		whiteKing.SetActive (false);
+
+		whiteQueen.SetActive (false);
+
+		whiteRook.SetActive (false);
+
+		whiteBishop.SetActive (false);
+
+		whiteKnight.SetActive (false);
+
+		whitePawn.SetActive (false);
+
+		blackKing.SetActive (false);
+
+		blackQueen.SetActive (false);
+
+		blackRook.SetActive (false);
+
+		blackBishop.SetActive (false);
+
+		blackKnight.SetActive (false);
+
+		blackPawn.SetActive (false);
+
+		g.SetActive (true);
+	}
+
 	public void setPiece(string p, string color)
 	{
 		piece = p;
+		deactivate ();
 		if (color == "black") 
 		{
 			state = 2;
@@ -149,6 +196,31 @@ public class Tile : MonoBehaviour {
 		{
 			state = 0;
 		}
+		if (piece == "whiteKing") {
+			deActivate (whiteKing);
+		} else if (piece == "whiteQueen") {
+			deActivate (whiteQueen);
+		} else if (piece == "whiteRook") {
+			deActivate (whiteRook);
+		} else if (piece == "whiteBishop") {
+			deActivate (whiteBishop);
+		} else if (piece == "whiteKnight") {
+			deActivate (whiteKnight);
+		} else if (piece == "whitePawn") {
+			deActivate (whitePawn);
+		} else if (piece == "blackKing") {
+			deActivate (blackKing);
+		} else if (piece == "blackQueen") {
+			deActivate (blackQueen);
+		} else if (piece == "blackRook") {
+			deActivate (blackRook);
+		} else if (piece == "blackBishop") {
+			deActivate (blackBishop);
+		} else if (piece == "blackKnight") {
+			deActivate (blackKnight);
+		} else if (piece == "blackPawn") {
+			deActivate (blackPawn);
+		} 
 	}
 
 	public void removePiece(int x, int y)
