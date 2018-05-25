@@ -234,7 +234,11 @@ public class Tile : MonoBehaviour {
 		} else if (piece == "whiteKnight") {
 			deActivate (whiteKnight);
 		} else if (piece == "whitePawn") {
-			deActivate (whitePawn);
+			if (pos [1] == 5) {
+				setPiece ("whiteQueen", color);
+			} else {
+				deActivate (whitePawn);
+			}
 		} else if (piece == "blackKing") {
 			deActivate (blackKing);
 		} else if (piece == "blackQueen") {
@@ -246,7 +250,11 @@ public class Tile : MonoBehaviour {
 		} else if (piece == "blackKnight") {
 			deActivate (blackKnight);
 		} else if (piece == "blackPawn") {
-			deActivate (blackPawn);
+			if (pos [1] == 5) {
+				setPiece ("blackQueen", color);
+			} else {
+				deActivate (blackPawn);
+			}
 		} 
 	}
 
