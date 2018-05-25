@@ -23,7 +23,28 @@ public class Tile : MonoBehaviour {
 	public GameObject blackKnight;
 	public GameObject blackPawn;
 
+
 	public bool softSelect= false;
+	public bool revealed=false;
+
+
+
+	void Update()
+	{
+		if (!revealed) {
+			deactivate ();
+		} else 
+		{
+			if(state==1)
+			{
+				setPiece (piece, "white");
+			}
+			if(state==2)
+			{
+				setPiece (piece, "black");
+			}
+		}
+	}
 
 	void Awake()
 	{
@@ -49,6 +70,7 @@ public class Tile : MonoBehaviour {
 		whiteKnight = Instantiate (whiteKnight);
 		whiteKnight.transform.parent = this.transform;
 		whiteKnight.transform.localPosition = new Vector3 (0f,0.1f, 0f);
+		whiteKnight.transform.Rotate( new Vector3(0, 180, 0), Space.Self );
 
 		whitePawn = Instantiate (whitePawn);
 		whitePawn.transform.parent = this.transform;
@@ -79,6 +101,11 @@ public class Tile : MonoBehaviour {
 		blackPawn.transform.localPosition = new Vector3 (0f,4f, 0);
 
 		deactivate ();
+	}
+
+	public void Reveal(bool r)
+	{
+		revealed = r;
 	}
 
 	public void setBlack()

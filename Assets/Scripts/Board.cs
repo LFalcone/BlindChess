@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Board : MonoBehaviour {
+	public int victory = 0;
 
 	public GameObject[,] tiles;
 	public GameObject Tile;
-	public GameObject King;
 	public int x=4;
 	public int y=6;
 	public int[] selectedSpace;
 
 	public string selectedPiece;
+
+	public GameObject cam;
+	public TurnHandler turnScript;
 
 	private Vector2 mouseOver;
 	private Vector2 startDrag;
@@ -25,6 +28,8 @@ public class Board : MonoBehaviour {
 		tiles = new GameObject[x, y];
 		MakeBoard();
 		SetPieces ();
+		turnScript = cam.GetComponent<TurnHandler> ();
+		RevealByTeam (turnScript.playerNum());
 	}
 	void MakeBoard()
 	{		
@@ -100,6 +105,874 @@ public class Board : MonoBehaviour {
 			tileScript = myTile.GetComponent<Tile> ();
 			tileScript.setPiece (piece, side);
 		}
+	}
+
+	void RevealAll()
+	{
+		for (int i = 0; i < x; ++i) {
+			for (int j = 0; j < y; ++j) {
+				GameObject myTile = tiles [i, j];
+				Tile tileScript = myTile.GetComponent<Tile> ();
+				tileScript.Reveal (true);
+			}
+		}
+	}
+
+	void RevealByTeam(int s)
+	{
+		for (int i = 0; i < x; ++i) {
+			for (int j = 0; j < y; ++j) {
+				GameObject myTile = tiles [i, j];
+				Tile tileScript = myTile.GetComponent<Tile> ();
+				tileScript.Reveal (s == tileScript.state);
+			}
+		}
+		for (int i = 0; i < x; ++i) {
+			for (int j = 0; j < y; ++j) {
+				GameObject myTile = tiles [i, j];
+				Tile tileScript = myTile.GetComponent<Tile> ();
+				int[] sSpace = {i,j};
+				/////////
+				//Kings//
+				/////////
+				if (tileScript.piece == "whiteKing") {
+					//check if adjacent spaces are on the board
+					bool left = false;
+					bool right = false;
+					bool down = false;
+					bool up = false;
+					if (sSpace [0] > 0) { //not on the left wall
+						left = true; //can move left
+					}
+					if (sSpace [0] < 3) { //not on the right wall
+						right = true; //can move left
+					}
+					if (sSpace [1] > 0) { //not on the upper wall
+						down = true; //can move up
+					}
+					if (sSpace [1] < 5) { //not on the lower wall
+						up = true; //can move down
+					}
+
+					if (left) {
+						GameObject checkTile = tiles [sSpace [0] - 1, sSpace [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+						if (up) {
+							checkTile = tiles [sSpace [0] - 1, sSpace [1] + 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (down) {
+							checkTile = tiles [sSpace [0] - 1, sSpace [1] - 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (right) {
+						GameObject checkTile = tiles [sSpace [0] + 1, sSpace [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						if (up) {
+							checkTile = tiles [sSpace [0] + 1, sSpace [1] + 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (down) {
+							checkTile = tiles [sSpace [0] + 1, sSpace [1] - 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (up) {
+						GameObject checkTile = tiles [sSpace [0], sSpace [1] + 1];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+					}
+					if (down) {
+						GameObject checkTile = tiles [sSpace [0], sSpace [1] - 1];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+					}
+				}
+				if (tileScript.piece == "blackKing") {
+					//check if adjacent spaces are on the board
+					bool left = false;
+					bool right = false;
+					bool down = false;
+					bool up = false;
+					if (sSpace [0] > 0) { //not on the left wall
+						left = true; //can move left
+					}
+					if (sSpace [0] < 3) { //not on the right wall
+						right = true; //can move left
+					}
+					if (sSpace [1] > 0) { //not on the upper wall
+						down = true; //can move up
+					}
+					if (sSpace [1] < 5) { //not on the lower wall
+						up = true; //can move down
+					}
+
+					if (left) {
+						GameObject checkTile = tiles [sSpace [0] - 1, sSpace [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1){
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+						if (up) {
+							checkTile = tiles [sSpace [0] - 1, sSpace [1] + 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1){
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (down) {
+							checkTile = tiles [sSpace [0] - 1, sSpace [1] - 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1){
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (right) {
+						GameObject checkTile = tiles [sSpace [0] + 1, sSpace [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1){
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+						if (up) {
+							checkTile = tiles [sSpace [0] + 1, sSpace [1] + 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1){
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (down) {
+							checkTile = tiles [sSpace [0] + 1, sSpace [1] - 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1){
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (up) {
+						GameObject checkTile = tiles [sSpace [0], sSpace [1] + 1];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1){
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+					}
+					if (down) {
+						GameObject checkTile = tiles [sSpace [0], sSpace [1] - 1];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1){
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+					}
+				}
+				// END OF KINGS
+
+				/////////
+				//ROOKS//
+				/////////
+				if (tileScript.piece == "whiteRook") {
+					int[] current = new int[2];
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0) {
+						--current [0];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3) {
+						++current [0];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [1] > 0) {
+						--current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [1] < 5) {
+						++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+				}
+				if (tileScript.piece == "blackRook") {
+					int[] current = new int[2];
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0) {
+						--current[0];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3) {
+						++current[0];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [1] > 0) {
+						--current[1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [1] < 5) {
+						++current[1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+				}
+				// END OF ROOKS
+
+				///////////
+				//BISHOPS//
+				///////////
+				if (tileScript.piece == "whiteBishop") {
+					int[] current = new int[2];
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0 && current[1] > 0) {
+						--current [0]; --current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3 && current[1] < 5) {
+						++current [0]; ++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3 && current [1] > 0) {
+						++current [0]; --current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0 && current [1] < 5) {
+						--current [0]; ++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+				}
+				if (tileScript.piece == "blackBishop") {
+					int[] current = new int[2];
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0 && current[1] > 0) {
+						--current [0]; --current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3 && current[1] < 5) {
+						++current [0]; ++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3 && current [1] > 0) {
+						++current [0]; --current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0 && current [1] < 5) {
+						--current [0]; ++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+				}
+				// END OF BISHOPS
+
+				//////////
+				//QUEENS//
+				//////////
+				if (tileScript.piece == "whiteQueen") {
+					int[] current = new int[2];
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0) {
+						--current [0];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3) {
+						++current [0];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [1] > 0) {
+						--current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [1] < 5) {
+						++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0 && current[1] > 0) {
+						--current [0]; --current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3 && current[1] < 5) {
+						++current [0]; ++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3 && current [1] > 0) {
+						++current [0]; --current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0 && current [1] < 5) {
+						--current [0]; ++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							break;
+						} else if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						}
+					}
+				}
+				if (tileScript.piece == "blackQueen") {
+					int[] current = new int[2];
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0) {
+						--current[0];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3) {
+						++current[0];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [1] > 0) {
+						--current[1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [1] < 5) {
+						++current[1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0 && current[1] > 0) {
+						--current [0]; --current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3 && current[1] < 5) {
+						++current [0]; ++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] < 3 && current [1] > 0) {
+						++current [0]; --current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+					current[0] = sSpace[0];
+					current[1] = sSpace[1];
+					while (current [0] > 0 && current [1] < 5) {
+						--current [0]; ++current [1];
+						GameObject checkTile = tiles [current [0], current [1]];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+							break;
+						} else if (checkScript.state == 2) {
+							break;
+						}
+					}
+				}
+				// END OF QUEENS
+
+				///////////
+				//KNIGHTS//
+				///////////
+				if (tileScript.piece == "whiteKnight") {
+					if (sSpace [0] - 2 >= 0) {
+						if (sSpace [1] - 1 >= 0) {
+							GameObject checkTile = tiles [sSpace [0] - 2, sSpace [1] - 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (sSpace [1] + 1 <= 5) {
+							GameObject checkTile = tiles [sSpace [0] - 2, sSpace [1] + 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (sSpace [0] + 2 <= 3) {
+						if (sSpace [1] - 1 >= 0) {
+							GameObject checkTile = tiles [sSpace [0] + 2, sSpace [1] - 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (sSpace [1] + 1 <= 5) {
+							GameObject checkTile = tiles [sSpace [0] + 2, sSpace [1] + 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (sSpace [1] - 2 >= 0) {
+						if (sSpace [0] - 1 >= 0) {
+							GameObject checkTile = tiles [sSpace [0] - 1, sSpace [1] - 2];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (sSpace [0] + 1 <= 3) {
+							GameObject checkTile = tiles [sSpace [0] + 1, sSpace [1] - 2];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (sSpace [1] + 2 <= 5) {
+						if (sSpace [0] - 1 >= 0) {
+							GameObject checkTile = tiles [sSpace [0] - 1, sSpace [1] + 2];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (sSpace [0] + 1 <= 3) {
+							GameObject checkTile = tiles [sSpace [0] + 1, sSpace [1] + 2];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+				}
+				if (tileScript.piece == "blackKnight") {
+					if (sSpace [0] - 2 >= 0) {
+						if (sSpace [1] - 1 >= 0) {
+							GameObject checkTile = tiles [sSpace [0] - 2, sSpace [1] - 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (sSpace [1] + 1 <= 5) {
+							GameObject checkTile = tiles [sSpace [0] - 2, sSpace [1] + 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (sSpace [0] + 2 <= 3) {
+						if (sSpace [1] - 1 >= 0) {
+							GameObject checkTile = tiles [sSpace [0] + 2, sSpace [1] - 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (sSpace [1] + 1 <= 5) {
+							GameObject checkTile = tiles [sSpace [0] + 2, sSpace [1] + 1];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (sSpace [1] - 2 >= 0) {
+						if (sSpace [0] - 1 >= 0) {
+							GameObject checkTile = tiles [sSpace [0] - 1, sSpace [1] - 2];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (sSpace [0] + 1 <= 3) {
+							GameObject checkTile = tiles [sSpace [0] + 1, sSpace [1] - 2];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+					if (sSpace [1] + 2 <= 5) {
+						if (sSpace [0] - 1 >= 0) {
+							GameObject checkTile = tiles [sSpace [0] - 1, sSpace [1] + 2];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (sSpace [0] + 1 <= 3) {
+							GameObject checkTile = tiles [sSpace [0] + 1, sSpace [1] + 2];
+							Tile checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+				}
+				// END OF KNIGHTS
+
+				/////////
+				//PAWNS//
+				/////////
+				if (tileScript.piece == "whitePawn") {
+					//check if adjacent spaces are on the board
+					bool left = false;
+					bool right = false;
+					//bool down = false;
+					bool up = false;
+					if (sSpace [0] > 0) { //not on the left wall
+						left = true; //can move left
+					}
+					if (sSpace [0] < 3) { //not on the right wall
+						right = true; //can move left
+					}
+					if (sSpace [1] < 5) { //not on the upper wall
+						up = true; //can move down
+					}
+
+					if (up) {
+						GameObject checkTile = tiles [sSpace [0], sSpace [1] + 1];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 2) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+
+						if (left) {
+							checkTile = tiles [sSpace [0] - 1, sSpace [1] + 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (right) {
+							checkTile = tiles [sSpace [0] + 1, sSpace [1] + 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 2) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+
+				}
+				if (tileScript.piece == "blackPawn") {
+					//check if adjacent spaces are on the board
+					bool left = false;
+					bool right = false;
+					bool down = false;
+					//bool up = false;
+					if (sSpace [0] > 0) { //not on the left wall
+						left = true; //can move left
+					}
+					if (sSpace [0] < 3) { //not on the right wall
+						right = true; //can move left
+					}
+					if (sSpace [1] > 0) { //not on the lower wall
+						down = true; //can move down
+					}
+
+					if (down) {
+						GameObject checkTile = tiles [sSpace [0], sSpace [1] - 1];
+						Tile checkScript = checkTile.GetComponent<Tile> ();
+						if (checkScript.state == 1) {
+							checkScript.Reveal (true); tileScript.Reveal (true);
+						}
+
+						if (left) {
+							checkTile = tiles [sSpace [0] - 1, sSpace [1] - 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+						if (right) {
+							checkTile = tiles [sSpace [0] + 1, sSpace [1] - 1];
+							checkScript = checkTile.GetComponent<Tile> ();
+							if (checkScript.state == 1) {
+								checkScript.Reveal (true); tileScript.Reveal (true);
+							}
+						}
+					}
+
+				}
+				// END OF PAWNS
+			}
+		}
+	}
+
+	void RevealByPosition(int i, int j)
+	{
+		GameObject myTile = tiles [i, j];
+		Tile tileScript = myTile.GetComponent<Tile> ();
+		tileScript.Reveal (true);
 	}
 
 	void UpdateMouseOver()
@@ -1147,10 +2020,18 @@ public class Board : MonoBehaviour {
 					TurnHandler.Player turnPlayer = GetComponentInChildren<TurnHandler> ().GetTurnPlayer ();
 					if (tileScript.softSelect) {
 						if (oldScript.state == 1 && turnPlayer == TurnHandler.Player.WHITE) {	
+							if (tileScript.piece == "blackKing") 
+							{ 
+								victory = 1;
+							}
 							tileScript.setPiece (oldScript.piece, "white");
 							oldScript.setPiece ("empty", "empty");
 							GetComponentInChildren<TurnHandler> ().TurnTaken ();
 						} else if (oldScript.state == 2 && turnPlayer == TurnHandler.Player.BLACK) {
+							if (tileScript.piece == "whiteKing") 
+							{ 
+								victory = 2;
+							}
 							tileScript.setPiece (oldScript.piece, "black");
 							oldScript.setPiece ("empty", "empty");
 							GetComponentInChildren<TurnHandler> ().TurnTaken ();
@@ -1176,8 +2057,18 @@ public class Board : MonoBehaviour {
 
 	void Update()
 	{
-		UpdateMouseOver();
-
+		if (victory==0) {
+			RevealByTeam (turnScript.playerNum ());
+			UpdateMouseOver ();
+		}
+		else if(victory==1)
+		{
+			RevealAll ();
+		}
+		else if(victory==2)
+		{
+			RevealAll ();
+		}
 	}
 
 }

@@ -9,7 +9,9 @@ public class TurnHandler : MonoBehaviour {
 
 	public Player startingPlayer = Player.WHITE;
 
-	private Player turnPlayer;
+	public GameObject switchPlayers;
+
+	public Player turnPlayer;
 	private bool turnTaken;
 	private bool waitForNextPlayer;
 	private bool gameOver;
@@ -25,6 +27,7 @@ public class TurnHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		switchPlayers.SetActive (waitForNextPlayer);
 		if (Input.GetKeyDown (KeyCode.Space) && turnTaken) { // Eventually this should be changed from a GetKeyDown to a button press or just after the turn player makes their move
 			NextTurn ();
 		}
@@ -75,6 +78,14 @@ public class TurnHandler : MonoBehaviour {
 
 	public Player GetTurnPlayer () {
 		return turnPlayer;
+	}
+
+	public int playerNum()
+	{
+		if (turnPlayer == Player.WHITE)
+			return 1;
+		else
+			return 2;
 	}
 
 	public void TurnTaken () {
