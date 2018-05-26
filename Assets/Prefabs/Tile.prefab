@@ -113,20 +113,21 @@ MonoBehaviour:
   piece: (
   mat: {fileID: 0}
   color: 
-  whiteKing: {fileID: 1155652532092330, guid: f11885eb4aae17342adec6ad5d3075fc, type: 2}
-  whiteQueen: {fileID: 1456512818525416, guid: 17c2a7820e3b0984c91a415c44f64c47, type: 2}
-  whiteRook: {fileID: 1669003649617364, guid: a70950206d62dcc4284f1088dda9b5a6, type: 2}
-  whiteBishop: {fileID: 1756879658925170, guid: 16bc61edcad70714fb36f1ef1a16d7bc,
+  whiteKing: {fileID: 1155652532092330, guid: 50b58ffe30786bf458abf6c259e5a27f, type: 2}
+  whiteQueen: {fileID: 1456512818525416, guid: 959cae125469a2847839d29e09be584e, type: 2}
+  whiteRook: {fileID: 1669003649617364, guid: 072ea438112fa05498ffedcbbcca202b, type: 2}
+  whiteBishop: {fileID: 1756879658925170, guid: 18c8e8ac379e8e24881c54859358f192,
     type: 2}
-  whiteKnight: {fileID: 1603853261446820, guid: 1bb59cf1d7b3abc47a29113c156056f9,
+  whiteKnight: {fileID: 1603853261446820, guid: 7f8be512a2896c64f9130d1a77b7991a,
     type: 2}
-  whitePawn: {fileID: 1346598049448228, guid: 933606dc32fdf264ca63ae910bdd443e, type: 2}
-  blackKing: {fileID: 1001943657621022, guid: 789a0f42cc94a414085735afecddea52, type: 2}
-  blackQueen: {fileID: 1168307938806830, guid: 883cc77b7a9b08c4f9f075e7eb24543a, type: 2}
-  blackRook: {fileID: 1843838773202988, guid: 084b56730e796e343a4c1b154b5ffe38, type: 2}
-  blackBishop: {fileID: 1235136477881780, guid: 83619028f2dfb524d82be9ca6af0bc47,
+  whitePawn: {fileID: 1346598049448228, guid: b42893acea2339f4a8d18725f78f04cf, type: 2}
+  blackKing: {fileID: 1001943657621022, guid: 3c334140aa1030a40b3262294e289967, type: 2}
+  blackQueen: {fileID: 1168307938806830, guid: 292d54d25171d324386113d64c3c3e85, type: 2}
+  blackRook: {fileID: 1843838773202988, guid: bb7815f3625c57848952732b5f1db28c, type: 2}
+  blackBishop: {fileID: 1235136477881780, guid: 76b3f455c9a82d14ebf99ad0e666d24a,
     type: 2}
-  blackKnight: {fileID: 1499253237672200, guid: 42c94c41366ce3242a0818bc873cfa1d,
+  blackKnight: {fileID: 1499253237672200, guid: 4dd6e8f9667b22b4e91436f0426c89b4,
     type: 2}
-  blackPawn: {fileID: 1832922792992074, guid: 5d04dbb09093a54479a922de083cf77e, type: 2}
+  blackPawn: {fileID: 1832922792992074, guid: 73dec0caab9648641a86b31dc9f31cea, type: 2}
   softSelect: 0
+  revealed: 0

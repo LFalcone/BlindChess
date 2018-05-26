@@ -250,7 +250,7 @@ public class Tile : MonoBehaviour {
 		} else if (piece == "blackKnight") {
 			deActivate (blackKnight);
 		} else if (piece == "blackPawn") {
-			if (pos [1] == 5) {
+			if (pos [1] == 0) {
 				setPiece ("blackQueen", color);
 			} else {
 				deActivate (blackPawn);
